@@ -10,10 +10,11 @@ def save_smaller_dataset(dataset):
 
 path= "resources/spotify_dataset.csv"
 dataset = pd.read_csv(path)
-data_head= dataset.head()
 dataset["Genre"] = dataset["Genre"].str.split(",")
 dataset = dataset.explode("Genre")
 genres = dataset["Genre"].value_counts()
+with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
+    print(genres)
 genre_families = {
     "rock": ["rock", "alternative rock", "pop rock", "hard rock", "classic rock",
              "progressive rock", "punk rock", "psychedelic rock", "garage rock", "math rock",
@@ -50,6 +51,7 @@ def map_to_family(genre):
     return "other"
 dataset["Genre_family"] = dataset["Genre"].apply(map_to_family)
 family_counts = dataset["Genre_family"].value_counts()
+
 print(family_counts)
 #print(weird_emotions['song'],end="")
 #print(weird_emotions['emotion'])
